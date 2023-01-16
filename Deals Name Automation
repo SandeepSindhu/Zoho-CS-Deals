@@ -1,0 +1,114 @@
+/*
+Information
+Page Details
+CategoryModule
+PageCreate Page
+ModuleDeals
+LayoutStandard
+Event Details
+Event TypePage Event
+EventonChange
+Library
+ZDK
+ZDK-1.0
+CRM API-2.0 
+*/
+
+//Author:Sandeep......offline backup successful
+var job_reference = ZDK.Page.getField("Job_Reference").getValue();
+var deal_Name = ZDK.Page.getField("Deal_Name");
+var deal_registration_Date = ZDK.Page.getField("Registration_Date");
+var deal_Project = ZDK.Page.getField("Project");
+var deal_Land_Size = ZDK.Page.getField("Land_size");
+var deal_Job_Release_Stage = ZDK.Page.getField("Job_Release_Stage");
+var deal_Is_SMSF = ZDK.Page.getField("Is_SMSF");
+var deal_Job_Number = ZDK.Page.getField("Job_Number");
+var deal_Job_State = ZDK.Page.getField("Job_State");
+var deal_Job_Suburb = ZDK.Page.getField("Job_Suburb");
+var deal_Job_Postcode = ZDK.Page.getField("Job_Postcode");
+console.log("test inside Cscript");
+var job_reference_id = job_reference.id;
+log("job_reference_id>>>>", job_reference_id);
+const job_data = ZDK.Apps.CRM.Products.fetchById(job_reference_id);
+
+//log(JSON.stringify(job_data));
+
+var product_Name = job_data._Product_Name;
+//log("product_Name", product_Name);
+var builder_Id = job_data._Builder_Lookup_Id;
+//log("builder_Id", builder_Id);
+var developer_Id = job_data._Developer_Lookup_Id;
+//log("developer_Id", developer_Id);
+var job_Stage = job_data._Stage;
+//log("stage", job_Stage);
+var job_SMSF = job_data._Is_SMSF;
+//log("job_SMSF", job_SMSF);
+var job_Number = job_data._Job_Number;
+//log("_Job_Number", job_Number);
+var job_Suburb = job_data._Suburb;
+//log("job_Suburb", job_Suburb);
+var job_State = job_data._State;
+//log("job_State", job_State);
+var job_Postcode = job_data._Postcode;
+//log("job_Postcode", job_Postcode);
+
+
+var land_Size = job_data._Land_Size;
+//log("land_Size", land_Size);
+
+var registration_Date = job_data._Registration_Date_Confirmed;
+//log("registration_Date", registration_Date);
+
+var job_Project = job_data._Project;
+//log("job_Project", job_Project);
+
+if(land_Size != null)
+{
+    var job_Land_Size = land_Size;
+    //log("job_Land_Size", job_Land_Size);
+} else {
+    var job_Land_Size = "";
+}
+
+if(registration_Date != null)
+{
+    var job_Registration_Date = registration_Date;
+    //log("job_Registration_Date", job_Registration_Date);
+} else {
+    var job_Registration_Date = "";
+}
+
+if(job_Project != null)
+{
+    var job_Project2 = job_Project;
+    //log("job_Project2", job_Project2);
+} else {
+    var job_Project2 = "";
+}
+
+if(builder_Id != null)
+{
+    const builder_data = ZDK.Apps.CRM.Accounts.fetchById(builder_Id);
+    var builder_Name = builder_data._Account_Name;
+    var resp =ZDK.Page.getField("Job_Builder").setValue({ "id": builder_Id, "name": builder_Name });
+}
+
+if(developer_Id != null)
+{
+    const developer_data = ZDK.Apps.CRM.Accounts.fetchById(developer_Id);
+    var developer_Name = developer_data._Account_Name;
+    var resp =ZDK.Page.getField("Job_Developer").setValue({ "id": developer_Id, "name": developer_Name });
+} 
+
+deal_Name.setValue(product_Name);
+deal_registration_Date.setValue(job_Registration_Date);
+deal_Project.setValue(job_Project2);
+deal_Land_Size.setValue(job_Land_Size);
+deal_Job_Release_Stage.setValue(job_Stage);
+deal_Is_SMSF.setValue(job_SMSF);
+deal_Job_Number.setValue(job_Number);
+deal_Job_Suburb.setValue(job_Suburb);
+deal_Job_State.setValue(job_State);
+deal_Job_Postcode.setValue(job_Postcode);
+
+
